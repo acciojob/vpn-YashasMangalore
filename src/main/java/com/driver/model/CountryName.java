@@ -1,6 +1,7 @@
 package com.driver.model;
 
-public enum CountryName {
+public enum CountryName
+{
     IND("001"),
     USA("002"),
     AUS("003"),
@@ -9,11 +10,13 @@ public enum CountryName {
 
     private final String code;
 
-    private CountryName(String s) {
+    private CountryName(String s)
+    {
         code = s;
     }
 
-    public String toCode() {
+    public String toCode()
+    {
         return this.code;
     }
 }

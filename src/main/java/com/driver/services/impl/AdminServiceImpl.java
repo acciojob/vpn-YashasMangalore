@@ -25,9 +25,8 @@ public class AdminServiceImpl implements AdminService {
     CountryRepository countryRepository1;
 
     @Override
-    public Admin register(String username, String password)
-    {
-        Admin admin=new Admin();
+    public Admin register(String username, String password) {
+        Admin admin = new Admin();
         admin.setUsername(username);
         admin.setPassword(password);
         adminRepository1.save(admin);
@@ -35,32 +34,25 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Admin addServiceProvider(int adminId, String providerName)
-    {
-        Admin admin=adminRepository1.findById(adminId).get();
-        ServiceProvider serviceProvider=new ServiceProvider();
-        serviceProvider.setAdmin(admin);
+    public Admin addServiceProvider(int adminId, String providerName) {
+        Admin admin = adminRepository1.findById(adminId).get();
+        ServiceProvider serviceProvider = new ServiceProvider();
         serviceProvider.setName(providerName);
-
-        List<ServiceProvider> serviceProviderList=admin.getServiceProviders();
+        serviceProvider.setAdmin(admin);
+        List<ServiceProvider> serviceProviderList = admin.getServiceProviders();
         serviceProviderList.add(serviceProvider);
         admin.setServiceProviders(serviceProviderList);
-
         adminRepository1.save(admin);
         return admin;
     }
 
     @Override
-    public ServiceProvider addCountry(int serviceProviderId, String countryName) throws Exception
-    {
-        String countryNameUpper=countryName.toUpperCase();
-        if (!countryNameUpper.equals("IND") && !countryNameUpper.equals("USA") && !countryNameUpper.equals("CHI") && !countryNameUpper.equals("JPN"))
-        {
-            throw new Exception("Country not found");
-        }
+    public ServiceProvider addCountry(int serviceProviderId, String countryName) throws Exception{
+        String countryName1 = countryName.toUpperCase();
+        if (!countryName1.equals("IND") && !countryName1.equals("USA") && !countryName1.equals("CHI") && !countryName1.equals("JPN")) throw new Exception("Country not found");
 
-        ServiceProvider serviceProvider=serviceProviderRepository1.findById(serviceProviderId).get();
-        Country country=new Country(CountryName.valueOf(countryNameUpper),CountryName.valueOf(countryNameUpper).toCode());
+        ServiceProvider serviceProvider = serviceProviderRepository1.findById(serviceProviderId).get();
+        Country country = new Country(CountryName.valueOf(countryName1),CountryName.valueOf(countryName1).toCode());
         country.setServiceProvider(serviceProvider);
         serviceProvider.getCountryList().add(country);
         serviceProviderRepository1.save(serviceProvider);
